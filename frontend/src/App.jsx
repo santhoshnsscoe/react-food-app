@@ -1,4 +1,4 @@
-import "./App.css";
+import "./assets/app.css";
 import Header from "./components/Header";
 import { CartProvider } from "./store/CartContext";
 import Meals from "./components/Meals/Meals";

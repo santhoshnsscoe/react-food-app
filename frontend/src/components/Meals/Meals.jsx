@@ -1,21 +1,23 @@
-import { useState, useEffect } from 'react';
-import { getMeals } from '../../web/meals';
-import MealItem from './MealItem';
+import MealItem from "./MealItem";
+import useFetchData from "../../hooks/useFetchData";
+import Error from "../UI/Error";
+
+const request = { method: "get", type: "meals" };
 
 export default function Meals() {
-  const [meals, setMeals] = useState([]);
+  const {
+    data: meals,
+    isLoading,
+    error
+  } = useFetchData(request, []);
 
-  useEffect(() => {
-    const fetchMeals = async () => {
-      try {
-      const data = await getMeals();
-        setMeals(data);
-      } catch (error) {
-        console.error('Error fetching meals:', error);
-      }
-    };
-    fetchMeals();
-  }, []);
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <Error title="Failed to fetch meals" message={error} />;
+  }
 
   return (
     <div className="meals">
